@@ -1,0 +1,7 @@
+---
+collections: []
+
+roles:
+  - name: glagasse.dnsmasq
+    src: https://github.com/glennlagasse/ansible-role-dnsmasq
+

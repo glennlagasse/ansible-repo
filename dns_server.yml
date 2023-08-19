@@ -1,0 +1,25 @@
+---
+- name: 'Install and Configure DNSMasq'
+  hosts: dns_server
+
+  roles:
+    - role: glagasse.dnsmasq
+      vars:
+        dnsmasq__domain: 'internal.glagasse.com'
+        dnsmasq__addn_hosts:
+          - {'address': '192.168.30.2',  'name': 'rpi4b01' }
+          - {'address': '192.168.30.10', 'name': 'pve01' }
+          - {'address': '192.168.30.11', 'name': 'pve02' }
+          - {'address': '192.168.30.12', 'name': 'pve03' }
+          - {'address': '192.168.30.20', 'name': 'srv-1' }
+        dnsmasq__cnames:
+          - { 'cname': 'gitea.internal.glagasse.com', 'target': 'srv-1.internal.glagasse.com' }
+        dnsmasq__dhcp_range:
+          {
+          'start_address': '192.168.30.200',
+          'end_address': '192.168.30.250',
+          'netmask': '255.255.255.0',
+          'lease_time': '8h'
+          }
+        dnsmasq__dhcp_hosts:
+          - { 'mac_address': 'fa:c7:da:e9:af:d1', 'fqdn': 'dev-1.internal.glagasse.com' }

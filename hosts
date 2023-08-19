@@ -1,0 +1,4 @@
+# localhost ansible_connection="local" ansible_python_interpreter="{{ ansible_playbook_python }}"
+
+[dns_server]
+192.168.30.2

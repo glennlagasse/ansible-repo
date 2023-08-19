@@ -1,0 +1,20 @@
+---
+- name: 'Install and Configure apt-cacher-ng'
+  hosts: apt_cache_server
+  gather_facts: false
+
+  tasks:
+    - name: 'Install apt-cacher-ng'
+      ansible.builtin.apt:
+        name: 'apt-cacher-ng'
+        state: 'present'
+        update_cache: true
+        cache_valid_time: 3600
+      become: true
+
+    - name: 'Enable and Start apt-cacher-ng'
+      ansible.builtin.systemd_service:
+        name: 'apt-cacher-ng'
+        state: 'started'
+        enabled: true
+      become: true

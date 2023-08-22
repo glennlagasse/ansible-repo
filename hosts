@@ -1,7 +1,10 @@
 # localhost ansible_connection="local" ansible_python_interpreter="{{ ansible_playbook_python }}"
 
-[dns_server]
-192.168.30.2
+[dev_dns_server]
+rpi4b01 ansible_host=192.168.30.2
+
+[prod_dns_server]
+codex   ansible_host=192.168.1.4
 
 [apt_cache_server]
-192.168.1.4
+codex   ansible_host=192.168.1.4

@@ -1,6 +1,6 @@
 ---
 - name: 'Install and Configure DNSMasq'
-  hosts: dns_server
+  hosts: 'dev_dns_server'
 
   roles:
     - role: glagasse.dnsmasq

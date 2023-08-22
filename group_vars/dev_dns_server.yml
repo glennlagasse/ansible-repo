@@ -1,0 +1,37 @@
+---
+dnsmasq__config:
+  - |
+     interface={{ ansible_default_ipv4.interface }}
+
+     bogus-priv
+     expand-hosts
+     domain=internal.glagasse.com
+     local=/internal.glagasse.com/
+
+     domain-needed
+     no-resolv
+     no-poll
+
+     dnssec
+     dnssec-check-unsigned
+     conf-file=/usr/share/dnsmasq-base/trust-anchors.conf
+
+     no-hosts
+     addn-hosts=/etc/hosts.dnsmasq
+
+     cname=gitea.internal.glagasse.com,srv-1.internal.glagasse.com
+
+     server=8.8.8.8
+     server=8.8.4.4
+     strict-order
+
+     dhcp-authoritative
+
+     dhcp-range=192.168.30.200,192.168.30.250,255.255.255.0,8h
+
+     dhcp-host=fa:c7:da:e9:af:d1,dev-1.internal.glagasse.com
+
+     dhcp-option=option:dns-server,{{ ansible_default_ipv4.address }}
+     dhcp-option=option:router,{{ ansible_default_ipv4.gateway }}
+     dhcp-option=option:domain-name,internal.glagasse.com
+     dhcp-option=option:domain-search,internal.glagasse.com

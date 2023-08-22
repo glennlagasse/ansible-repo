@@ -1,0 +1,53 @@
+---
+dnsmasq__config:
+  - |
+     port=53
+
+     bogus-priv
+     domain-needed
+     expand-hosts
+     no-poll
+     no-resolv
+     cache-size=5000
+     dns-forward-max=250
+     neg-ttl=3600
+     log-facility=/var/log/dnsmasq.log
+     no-hosts
+
+     addn-hosts=/etc/hosts.dnsmasq
+
+     domain=lan
+     local=/lan/
+
+     interface={{ ansible_default_ipv4.interface }}
+     
+     server=8.8.8.8
+     server=8.8.4.4
+     strict-order
+
+     cname=proxy.lan,codex.lan
+     cname=web01.lan,codex.lan
+     cname=plex.lan,ip-192-168-1-20.lan
+
+     dhcp-boot=pxelinux.0
+     pxe-service=x86PC,"Install Linux",pxelinux.0
+     enable-tftp
+     tftp-root=/srv/tftp
+
+     dhcp-authoritative
+
+     dhcp-range=192.168.1.50,192.168.1.150,255.255.255.0,8h
+
+     # Leases
+     dhcp-host=00:11:32:9e:16:2d,ds918plus
+     dhcp-host=00:1b:a9:8c:91:5a,mfc7360n
+     dhcp-host=b8:27:eb:56:fc:ce,printserv
+
+     # Static reservations
+     dhcp-host=ac:1f:6b:77:b4:ae,pve-01,192.168.1.7
+     dhcp-host=12:ee:bc:4e:47:c1,valheim-server,192.168.1.134
+
+     dhcp-option=option:dns-server,{{ ansible_default_ipv4.address }}
+     dhcp-option=option:router,{{ ansible_default_ipv4.gateway }}
+     dhcp-option=option:domain-name,lan
+     dhcp-option=option:domain-search,lan
